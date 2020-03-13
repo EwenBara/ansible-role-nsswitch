@@ -1,0 +1,26 @@
+---
+os: linux
+arch: amd64
+language: python
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+env:
+  - TOXENV=py-ansible-27
+  - TOXENV=py-ansible-28
+  - TOXENV=py-ansible-29
+  - TOXENV=py-ansible-devel
+jobs:
+  allow_failures:
+    - env: TOXENV=py-ansible-devel
+services:
+  - docker
+before_install:
+  - sudo apt-get -qq update
+install:
+  - pip install tox docker
+  # - pip install required driver (e.g. docker, python-vagrant, shade, boto, apache-libcloud)
+script:
+  - tox

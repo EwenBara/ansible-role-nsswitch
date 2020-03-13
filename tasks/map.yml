@@ -1,0 +1,26 @@
+---
+
+- name: load variables
+  include_vars:
+    file: "{{ map }}.yml"
+    name: "{{ map }}"
+  loop:
+    - default
+    - osfamilymap
+    - distributionmap
+    - fingerprintmap
+  loop_control:
+    loop_var: map
+
+- name: compute fingerprint
+  set_fact:
+    ansible_fingerprint: "{{ ansible_distribution+(ansible_distribution_major_version != 'NA') | ternary(ansible_distribution_major_version, '') }}"
+
+- name: compute configuration
+  set_fact:
+    nsswitch: "{{ default.nsswitch | combine(
+      osfamilymap[ansible_os_family].nsswitch is defined | ternary(osfamilymap[ansible_os_family].nsswitch, {}),
+      distributionmap[ansible_distribution].nsswitch is defined | ternary(distributionmap[ansible_distribution].nsswitch, {}),
+      nsswitch | default({}),
+      recursive=True
+      ) }}"
