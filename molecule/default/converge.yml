@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include nsswith"
+      include_role:
+        name: "ansible-role-nsswitch"

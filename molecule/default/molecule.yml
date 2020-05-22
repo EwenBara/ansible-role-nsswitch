@@ -3,16 +3,20 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
 platforms:
-  - name: instance
-    image: centos:7
+  - name: Archlinux
+    image: archlinux:latest
+    dockerfile: Dockerfile.j2
+  # - name: Centos7
+  #   image: docker.io/pycontribs/centos:7
+  #   pre_build_image: true
+  # - name: Debian9
+  #   image: debian:stretch
+  #   command: /sbin/init
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   privileged: yes
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 verifier:
-  name: testinfra
-  lint:
-    name: flake8
+  name: ansible
