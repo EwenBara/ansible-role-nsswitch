@@ -18,9 +18,10 @@
 
 - name: compute configuration
   set_fact:
-    nsswitch: "{{ default.nsswitch | combine(
+    nsswitch: "{{ default.nsswitch | default({}) | combine(
       osfamilymap[ansible_os_family].nsswitch is defined | ternary(osfamilymap[ansible_os_family].nsswitch, {}),
       distributionmap[ansible_distribution].nsswitch is defined | ternary(distributionmap[ansible_distribution].nsswitch, {}),
+      fingerprintmap[ansible_fingerprint].nsswitch is defined | ternary(fingerprintmap[ansible_fingerprint].nsswitch, {}),
       nsswitch | default({}),
       recursive=True
       ) }}"
