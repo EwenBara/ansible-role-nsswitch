@@ -3,5 +3,6 @@
 # See nsswitch.conf(5) for details.
 
 {% for key, values in nsswitch.items() %}
-{{ key }}: {{ values }}
+{% if key != '' %}{{ key }}: {{ values }}{% endif %}
+
 {% endfor %}
