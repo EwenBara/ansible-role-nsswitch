@@ -1,0 +1,7 @@
+#jinja2: lstrip_blocks: True
+# Name Service Switch configuration file.
+# See nsswitch.conf(5) for details.
+
+{% for key, values in nsswitch.items() %}
+{{ key }}: {{ values }}
+{% endfor %}

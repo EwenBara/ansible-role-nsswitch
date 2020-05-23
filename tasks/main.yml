@@ -1,5 +1,11 @@
 ---
 
-- name: hello_world
-  debug:
-    msg: "Hello World !!!"
+- include: map.yml
+
+- name: configure nsswitch
+  template:
+    src: nsswitch.conf.j2
+    dest: /etc/nsswitch.conf
+    owner: root
+    group: root
+    mode: '0644'
