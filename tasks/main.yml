@@ -1,6 +1,6 @@
 ---
 
-- include: map.yml
+- include_tasks: map.yml
 
 - name: configure nsswitch
   template:
